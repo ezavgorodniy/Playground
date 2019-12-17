@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Card from './Card';
 
 interface AppProps {
@@ -8,7 +8,7 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({title}) => {
   return (
-    <div className="App">
+    <div>
       <div className="header">{title}</div>
       <Card />
     </div>
