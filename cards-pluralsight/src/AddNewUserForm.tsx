@@ -17,12 +17,13 @@ const AddNewUserForm: React.FC<AddNewUserProps> = ({onAddNewProfile}) => {
     axios.get(`https:/api.github.com/users/${nameValue}`)
       .then(res => {
         onAddNewProfile(res.data)
+        setNameValue('');
       })
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="GitHub username" onChange={onNameValueChange} required />
+      <input type="text" placeholder="GitHub username" value={nameValue} onChange={onNameValueChange} required />
       <button>Add card</button>
     </form>
   );
