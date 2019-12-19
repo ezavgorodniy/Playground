@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import CardList from './CardList';
 import { CardModel } from './models/CardModel';
+import AddNewUserForm from './AddNewUserForm';
 
 interface AppProps {
   title: string;
 }
 
 const App: React.FC<AppProps> = ({title}) => {
+  const [testData, setTestData] = useState([] as CardModel[]);
 
-	const testData = [
-      {name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"},
-      {name: "Sophie Alpert", avatar_url: "https://avatars2.githubusercontent.com/u/6820?v=4", company: "Humu"},
-      {name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook"},
-  ] as CardModel[];
+  const addNewProfile = (profileData: any) => {
+    setTestData(prevState => ([
+      ...prevState, profileData
+    ]));
+  };
 
   return (
     <div>
       <div className="header">{title}</div>
+      <AddNewUserForm onAddNewProfile={addNewProfile} />
       <CardList cards={testData} />
     </div>
   );
