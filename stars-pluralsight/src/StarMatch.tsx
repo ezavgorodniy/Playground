@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './StarMatch.css';
+import { range, random } from './Utils';
+import PlayNumber from './PlayNumber';
+import StarsDisplay from './StarsDisplay';
 
 const StarMatch: React.FC = () => {
+  const [stars, setStars] = useState(random(1, 9));
   return (
     <div className="game">
       <div className="help">
@@ -9,26 +13,12 @@ const StarMatch: React.FC = () => {
       </div>
       <div className="body">
         <div className="left">
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
+          <StarsDisplay starCount={stars} />
         </div>
         <div className="right">
-          <button className="number">1</button>
-          <button className="number">2</button>
-          <button className="number">3</button>
-          <button className="number">4</button>
-          <button className="number">5</button>
-          <button className="number">6</button>
-          <button className="number">7</button>
-          <button className="number">8</button>
-          <button className="number">9</button>
+          {range(1, 9).map(number => 
+            <PlayNumber number={number} />
+          )}
         </div>
       </div>
       <div className="timer">Time Remaining: 10</div>
