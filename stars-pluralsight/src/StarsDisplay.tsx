@@ -1,6 +1,6 @@
 import React from 'react';
 import './StarsDisplay.css';
-import { range, random } from './Utils';
+import { range } from './Utils';
 
 interface StarsDisplayProps {
   starCount: number;
