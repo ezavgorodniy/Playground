@@ -3,6 +3,7 @@ import './StarMatch.css';
 import { range, random, sum, randomSumIn } from './Utils';
 import PlayNumber from './PlayNumber';
 import StarsDisplay from './StarsDisplay';
+import PlayAgain from './PlayAgain';
 
 const StarMatch: React.FC = () => {
   const [stars, setStars] = useState(random(1, 9));
@@ -10,6 +11,7 @@ const StarMatch: React.FC = () => {
   const [candidateNums, setCandidateNums] = useState([] as number[]);
 
   const candidatesAreWrong = sum(candidateNums) > stars;
+  const gameIsDone = availableNums.length === 0;
 
   const numberStatus = (number: number) => {
     if (!availableNums.includes(number)) {
@@ -19,6 +21,12 @@ const StarMatch: React.FC = () => {
       return candidatesAreWrong ? 'wrong' : 'candidate';
     }
     return 'available';
+  };
+
+  const resetGame = () => { 
+    setStars(random(1, 9));
+    setAvailableNums(range(1, 9));
+    setCandidateNums([] as number[]);
   };
 
   const onNumberClick = (number: number, currentStatus: string) => {
@@ -49,7 +57,13 @@ const StarMatch: React.FC = () => {
       </div>
       <div className="body">
         <div className="left">
-          <StarsDisplay starCount={stars} />
+          {gameIsDone ? (
+            <PlayAgain 
+            onClick={resetGame} 
+            />
+          ) : (
+            <StarsDisplay starCount={stars} />
+          )}
         </div>
         <div className="right">
           {range(1, 9).map(number => 
