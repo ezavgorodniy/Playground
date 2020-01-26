@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './StarMatch.css';
 import { range, random, sum, randomSumIn } from './Utils';
 import PlayNumber from './PlayNumber';
@@ -9,6 +9,18 @@ const StarMatch: React.FC = () => {
   const [stars, setStars] = useState(random(1, 9));
   const [availableNums, setAvailableNums] = useState(range(1, 9));
   const [candidateNums, setCandidateNums] = useState([] as number[]);
+  const [secondsLeft, setSecondsLeft] = useState(10);
+
+  useEffect(() => {
+    if (secondsLeft > 0) {
+      var timerId = setTimeout(() => {
+        setSecondsLeft(secondsLeft - 1);
+      }, 1000);
+
+      return () => clearTimeout(timerId);
+    }
+
+  });
 
   const candidatesAreWrong = sum(candidateNums) > stars;
   const gameIsDone = availableNums.length === 0;
@@ -76,7 +88,7 @@ const StarMatch: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="timer">Time Remaining: 10</div>
+      <div className="timer">Time Remaining: {secondsLeft}</div>
     </div>
   );
 }
