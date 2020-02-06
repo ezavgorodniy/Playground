@@ -9,11 +9,10 @@ const httpTrigger: AzureFunction = async function(
   req: HttpRequest
 ): Promise<void> {
   context.log("HTTP trigger function processed a request.");
-  const collectionName =
-    req.query.collectionName || (req.body && req.body.collectionName);
-  if (collectionName) {
+  const collectionName = req.query.collectionName;
+  const dbName = req.query.dbName;
+  if (collectionName && dbName) {
     const mongoUri = "***";
-    const dbName = "11111111-1111-1111-1111-555555550001";
 
     let client: MongoClient;
     try {
