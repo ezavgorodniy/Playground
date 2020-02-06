@@ -1,5 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { MongoClient } from "mongodb";
+import { createQuery } from "odata-v4-mongodb";
+import { buildODataQuery } from "../SharedCode/buildODataQuery";
+
 
 const httpTrigger: AzureFunction = async function(
   context: Context,
@@ -20,18 +23,26 @@ const httpTrigger: AzureFunction = async function(
       context.res = { status: 500, body: error };
       return context.done();
     }
-
+   
     try {
+        const mongodbQuery = createQuery(buildODataQuery(req));
+
       const docs = await client
         .db(dbName)
         .collection(collectionName)
-        .find()
+        .find(mongodbQuery.query)
+        .project(mongodbQuery.projection)
+        .skip(mongodbQuery.skip || 0)
+        .limit(mongodbQuery.limit || 0)
+        .sort(mongodbQuery.sort)
         .toArray();
       context.log("Success!");
       context.res = {
         headers: { "Content-Type": "application/json" },
         status: 200,
-        body: JSON.stringify({ res: docs })
+        body: JSON.stringify({             
+            value: docs 
+        })
       };
     } catch (error) {
       context.log("Error running query");

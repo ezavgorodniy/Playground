@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@types/mongodb": "^3.3.15",
-    "mongodb": "^3.5.2"
+    "mongodb": "^3.5.2",
+    "odata-v4-mongodb": "^0.1.12",
+    "odata-v4-server": "^0.2.13"
   },
   "devDependencies": {
     "@azure/functions": "^1.0.2-beta2",
